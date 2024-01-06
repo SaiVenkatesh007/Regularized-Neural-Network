@@ -14,7 +14,7 @@ def gen_data(m, seed=1, scale=0.7):
     return x_train, y_train, x_ideal, y_ideal
 
 class LinModel:
-    def __init__(self, degree, regularization=False, lambda_=0):
+    def __init__(self, degree=10, regularization=False, lambda_=0):
         if regularization:
             self.linear_model = Ridge(alpha=lambda_)
         else:
