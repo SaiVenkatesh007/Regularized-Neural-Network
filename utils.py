@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.metrics import mean_squared_error
+from sklearn.datasets import make_blobs
 
 def gen_data(m, seed=1, scale=0.7):
     c=0
@@ -12,6 +13,14 @@ def gen_data(m, seed=1, scale=0.7):
     y_train = y_ideal + scale * y_ideal * (np.random.sample((m,))-0.5)
     x_ideal = x_train
     return x_train, y_train, x_ideal, y_ideal
+
+def gen_blob():
+    classes = 6
+    m = 800
+    std = 0.4
+    centers = np.array([[-1, 0], [1, 0], [0, 1], [0, -1], [-2, 1], [-2, -1]])
+    X, y = make_blobs(n_samples=m, centers=centers, cluster_std=std, random_state=2, n_features=2)
+    return (X, y, centers, classes, std)
 
 class LinModel:
     def __init__(self, degree=10, regularization=False, lambda_=0):
