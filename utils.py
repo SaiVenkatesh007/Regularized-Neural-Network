@@ -45,3 +45,22 @@ class LinModel:
     def mse(self, y, ypred):
         err = mean_squared_error(y, ypred)/2
         return(err)
+
+def plot_cat_decision_boundary(ax, X,predict , class_labels=None, legend=False, vector=True, color='g', lw = 1):
+    pad = 0.5
+    x_min, x_max = X[:, 0].min() - pad, X[:, 0].max() + pad
+    y_min, y_max = X[:, 1].min() - pad, X[:, 1].max() + pad
+    h = max(x_max-x_min, y_max-y_min)/200
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    points = np.c_[xx.ravel(), yy.ravel()]
+    
+    if vector:
+        Z = predict(points)
+    else:
+        Z = np.zeros((len(points),))
+        for i in range(len(points)):
+            Z[i] = predict(points[i].reshape(1,2))
+    Z = Z.reshape(xx.shape)
+    
+    ax.contour(xx, yy, Z, colors=color, linewidths=lw) 
+    ax.axis('tight') 
