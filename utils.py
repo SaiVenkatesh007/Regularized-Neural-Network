@@ -5,6 +5,9 @@ from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.metrics import mean_squared_error
 from sklearn.datasets import make_blobs
 
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
 def gen_data(m, seed=1, scale=0.7):
     c=0
     x_train = np.linspace(0,49,m)
@@ -64,3 +67,14 @@ def plot_cat_decision_boundary(ax, X,predict , class_labels=None, legend=False, 
     
     ax.contour(xx, yy, Z, colors=color, linewidths=lw) 
     ax.axis('tight') 
+
+def plt_mc_data(ax, X, y, classes,  class_labels=None, map=plt.cm.Paired, legend=False, size=50, m='o'):
+    normy = mpl.colors.Normalize(vmin=0, vmax=classes)
+    for i in range(classes):
+        idx = np.where(y == i)
+        label = class_labels[i] if class_labels else "c{}".format(i)
+        ax.scatter(X[idx, 0], X[idx, 1],  marker=m,
+                    color=map(normy(i)),
+                    s=size, label=label)
+    if legend: ax.legend(loc='lower right')
+    ax.axis('equal')
