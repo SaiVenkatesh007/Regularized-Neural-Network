@@ -78,3 +78,12 @@ def plt_mc_data(ax, X, y, classes,  class_labels=None, map=plt.cm.Paired, legend
                     s=size, label=label)
     if legend: ax.legend(loc='lower right')
     ax.axis('equal')
+
+def eval_cat_err(y, ypred):
+    m = len(y)
+    incorrect = 0
+    for i in range(m):
+        if ypred[i] != y[i]:
+            incorrect += 1
+    caterr = incorrect/m
+    return(caterr)
